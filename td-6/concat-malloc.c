@@ -11,7 +11,14 @@ int main(int argc, char* argv[]) {
 
     for (int arg = 1; arg < argc; arg++) {
         length += strlen(argv[arg]);
-        res = (char*)realloc(res, sizeof(char) * length);
+        char* tmp = (char*)realloc(res, sizeof(char) * length);
+
+        if (tmp == NULL) {
+            free(res);
+            return 1;
+        }
+
+        res = tmp;
         strcat(res, argv[arg]);
     }
 
